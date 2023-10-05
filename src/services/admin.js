@@ -14,8 +14,32 @@ export const login = async (formData) => {
 
         const data = await res.json();
         
-        return data
+        return {
+            status: res.status,
+            data: data
+        }
     } catch (err) {
-        console.log('Have a error when call api. Internal Server Error' + err);
+        return err;
+    }
+};
+
+export const validateToken = async (token) => {
+    try {
+         const res = await fetch(`${baseURl}/auth/validateToken`, {
+            method: 'POST',
+            headers: {
+                x_authorization: token.accessToken
+            }
+        })
+        const data = await res.json();
+        
+        return {
+            status: res.status,
+            data: data
+        }
+    } catch (error) {
+        return error;
     }
 }
+
+

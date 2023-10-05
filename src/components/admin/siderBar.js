@@ -1,5 +1,7 @@
 import React from "react";
 import Link from 'next/link'
+import Cookies from 'js-cookie';
+import { useRouter } from 'next/navigation'
 import {
   Card,
   Typography,
@@ -24,10 +26,16 @@ import {
 
  
 export default function MultiLevelSidebar() { 
+  const router = useRouter();
   const [open, setOpen] = React.useState(0);
  
   const handleOpen = (value) => {
     setOpen(open === value ? 0 : value);
+  };
+
+  const handleClick = () => {
+    Cookies.remove('user');
+    router.push('/admin/login')
   };
 
   return (
@@ -108,7 +116,7 @@ export default function MultiLevelSidebar() {
             Profile
           </ListItem>
         </Link>
-        <ListItem>
+        <ListItem onClick={() => handleClick()}>
           <ListItemPrefix>
             <PowerIcon className="h-5 w-5" />
           </ListItemPrefix>

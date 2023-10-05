@@ -2,6 +2,8 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import {login} from '@/services/admin'
+import toast, { Toaster } from 'react-hot-toast';
+import Cookies from 'js-cookie';
 
 import {
   Card,
@@ -15,17 +17,16 @@ export default function SimpleLoginForm() {
     // storing form data in state   
     const [formData, setFormData] = useState({ username: '', password: '' })
 
-    console.log(formData);
-
     // handling form data and sending it to backend
     const handleSubmit = async (e) => {
         e.preventDefault()
         const data = await login(formData) || [];
-
-        if(data.msg) {
+        if(data.status == 200) {
+            toast.success(data.data.msg)
             router.push('/admin')
+            Cookies.set('user', JSON.stringify(data.data), { expires: 7 })
         } else {
-            // handle log message
+            toast.error(data.data.msg)
         }
     }
 
@@ -52,6 +53,10 @@ export default function SimpleLoginForm() {
             </a>
             </Typography>
         </form>
+        <Toaster
+            position="top-center"
+            reverseOrder={false}
+        />
         </Card>
     );
 }

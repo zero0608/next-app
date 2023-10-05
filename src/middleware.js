@@ -1,21 +1,23 @@
 import { NextResponse } from 'next/server'
+import {validateToken} from '@/services/admin'
  
 // This function can be marked `async` if using `await` inside
-export function middleware(request) {
-  console.log("hihis");
-  // return NextResponse.redirect(new URL('/test', request.url))
+export async function middleware(request) {
+  let cookie = request.cookies.get('user')
+  if (cookie) {
+    const data = await validateToken(JSON.parse(cookie.value))  || [];
+    if (data.status == 200) {
+      return NextResponse.next()
+    } else {
+       return NextResponse.redirect(new URL('/admin/login', request.url))
+    }
+  } else {
+      return NextResponse.redirect(new URL('/admin/login', request.url))
+  }
 }
  
-// See "Matching Paths" below to learn more
 export const config = {
   matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - api (API routes)
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     */
-    '/admin/:path*',
+    '/admin',
   ],
 }
