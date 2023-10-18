@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation'
 import {login} from '@/services/admin'
 import toast, { Toaster } from 'react-hot-toast';
 import Cookies from 'js-cookie';
+import Link from 'next/link';
 
 import {
   Card,
@@ -20,6 +21,12 @@ export default function SimpleLoginForm() {
     // handling form data and sending it to backend
     const handleSubmit = async (e) => {
         e.preventDefault()
+        // Validate the form data
+        if (!formData.username || !formData.password) {
+            toast.error("Please fill in all fields.");
+            return;
+        }
+        
         const data = await login(formData) || [];
         if(data.status == 200) {
             toast.success(data.data.msg)
@@ -48,9 +55,7 @@ export default function SimpleLoginForm() {
             </Button>
             <Typography color="gray" className="mt-4 text-center font-normal">
             Create a account, do you want?{" "}
-            <a href="#" className="font-medium text-gray-900">
-                Sign up
-            </a>
+             <Link href="signup" className="font-medium text-gray-900">Sign up</Link>
             </Typography>
         </form>
         <Toaster
