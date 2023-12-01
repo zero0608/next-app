@@ -10,7 +10,6 @@ import {
   ListItemPrefix
 } from "@material-tailwind/react";
 import {
-  UserCircleIcon,
   InboxIcon,
   PowerIcon,
   UsersIcon,
@@ -18,9 +17,9 @@ import {
   ClipboardDocumentListIcon
 } from "@heroicons/react/24/solid";
 
- 
-export default function MultiLevelSidebar() { 
-  const router = useRouter(); 
+
+export default function MultiLevelSidebar() {
+  const router = useRouter();
   const handleClick = () => {
     Cookies.remove('user');
     router.push('/admin/login')
@@ -37,12 +36,12 @@ export default function MultiLevelSidebar() {
         <Link href="/admin">
           <ListItem>
             <ListItemPrefix>
-              <UsersIcon className="h-5 w-5"/>
+              <UsersIcon className="h-5 w-5" />
             </ListItemPrefix>
             Users
           </ListItem>
         </Link>
-        <Link href="/test">
+        <Link href="/admin/author">
           <ListItem>
             <ListItemPrefix>
               <InboxIcon className="h-5 w-5" />
@@ -50,7 +49,7 @@ export default function MultiLevelSidebar() {
             Authors
           </ListItem>
         </Link>
-        <Link href="/test">
+        <Link href="/admin/category">
           <ListItem>
             <ListItemPrefix>
               <BuildingStorefrontIcon className="h-5 w-5" />
