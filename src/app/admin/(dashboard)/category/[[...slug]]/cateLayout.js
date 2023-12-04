@@ -5,13 +5,12 @@ import {
     Card,
     CardHeader,
     Typography,
-    Button,
-    CardBody
+    Button
 } from "@material-tailwind/react";
 
 const TABLE_HEAD = ["Index", "Name", "Description", "Action"];
 
-export default function UserLayout({ children }) {
+export default function CateLayout({ children }) {
     return (
         <Card className="w-full flex-row h-full block">
             <CardHeader floated={false} shadow={false} className="rounded-none mt-0 pt-4">
@@ -31,32 +30,7 @@ export default function UserLayout({ children }) {
                     </div>
                 </div>
             </CardHeader>
-
-            <CardBody className="px-0">
-                <table className="mt-4 w-full min-w-max table-auto text-center">
-                    <thead>
-                        <tr>
-                            {TABLE_HEAD.map((head) => (
-                                <th
-                                    key={head}
-                                    className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4"
-                                >
-                                    <Typography
-                                        variant="small"
-                                        color="blue-gray"
-                                        className="font-normal leading-none opacity-70"
-                                    >
-                                        {head}
-                                    </Typography>
-                                </th>
-                            ))}
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                    </tbody>
-                </table>
-            </CardBody>
+            {children}
         </Card>
     );
 }

@@ -83,3 +83,21 @@ export const getUser = async (token) => {
         return error;
     }
 };
+
+// Service Category
+
+export const getCate = async() => {
+    try {
+        const res = await fetch(`${baseURl}/users`, {
+            method: 'GET',
+        })
+        const data = await res.json(); 
+
+        return {
+            status: res.status,
+            data: data
+        }
+    } catch (error) {
+        
+    }
+}
