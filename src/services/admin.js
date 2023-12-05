@@ -1,7 +1,6 @@
 // base URl for all api calls
 const baseURl = `http://localhost:5000`;
 
-
 // Block login,register
 export const login = async (formData) => {
     try {
@@ -15,7 +14,7 @@ export const login = async (formData) => {
         })
 
         const data = await res.json();
-        
+
         return {
             status: res.status,
             data: data
@@ -34,7 +33,7 @@ export const validateToken = async (token) => {
             }
         })
         const data = await res.json();
-        
+
         return {
             status: res.status,
             data: data
@@ -74,7 +73,7 @@ export const getUser = async (token) => {
             }
         })
         const data = await res.json();
-        
+
         return {
             status: res.status,
             data: data
@@ -86,18 +85,27 @@ export const getUser = async (token) => {
 
 // Service Category
 
-export const getCate = async() => {
+export const getCate = async (params, searchParams, baseUrl) => {
+    const pageNumner = params?.slug?.[0]?.[0] ?? 1,
+        limit = params?.slug?.[1]?.[1] ?? 10,
+        searchTerm = (searchParams.search != undefined) ? searchParams.search : null;
     try {
-        const res = await fetch(`${baseURl}/users`, {
+        let url = `cate/${pageNumner}/${limit}`;
+
+        if (searchTerm !== null) {
+            url += `?search=${encodeURIComponent(searchTerm)}`;
+        }
+
+        const res = await fetch(`${baseURl}/${url}`, {
             method: 'GET',
         })
-        const data = await res.json(); 
+        const data = await res.json();
 
         return {
             status: res.status,
             data: data
         }
     } catch (error) {
-        
+        return error;
     }
 }
